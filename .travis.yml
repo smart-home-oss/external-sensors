@@ -1,0 +1,13 @@
+language: java
+jdk: openjdk11
+
+cache:
+  directories:
+    - "$HOME/.m2"
+
+addons:
+  sonarcloud:
+    token:
+      secure: "lhTOCABIoBXEh66Pc+WfyD3Bf0nWZm3QeMutQtIQcHayuAiYZ4Cg956p4c9/c2fezyI8a+AZCBfZGddBPp/kHxshFXFzPHbKMNwXEvAeJBX1o1j9wBhAlnfilRD/RidBj5KiGSkYb1kKq+sEwF3ffjwzV6AYrKmH6rLwLQMQXC3NSKfEWZGJmXKrqIbqa/t+ow0GnltpCUAP2WoxtrHSdryZ6Vru+CzXGa5Pg58+lC/oziyjzIgg9/sSbgX3TEXtIk/QsaCRO5ZlUBOHZAmGOHdjpPVBPufylNuPjr58WFIvHoM2wJD2YL1fTKNuUN3sZBHUoSkZT+FGcsKpC934iROy+O6zjFf21ZEiYrbREpojHtTVogK4NK0hBVR5GjSe12TTFMpjyYHRuy7PfianbIBgzlo4KquKs8UJ128rXiwNXs7iyMYzLzQUssGUNLF+zApMpSiflSxWHr63QdECOJfviQiQZeoj0lTMNNyHeEuXWoqpmafGuzB8dgc++b0X8g7Sc6DTQM2xi6uantdj/iiVud9davavsUGvZJhFc6Vivj8ioTFlAoDHl10ovOBS3/u5fVW9tkCjibEUtHHY0xViinjFZTx9xqUiGdLTpHxi2aSfSRroh/p/jfb+EU6/Nq0136avegcKHN09feRe6eT9rU8aUrCFzX8ZrxStZAM="
+
+script: mvn verify sonar:sonar -q

@@ -1,0 +1,13 @@
+package lu.smarthome.externalsensors;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class ExternalSensorsApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(ExternalSensorsApplication.class, args);
+	}
+
+}

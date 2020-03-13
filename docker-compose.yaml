@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  user:
+    image: smart-home-oss/external-sensors:latest
+    container_name: external-sensors-shoss
+    build: ./
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.house.rule=Host(`house.localhost`)"
+      - "traefik.http.routers.house.entrypoints=web"
+    ports:
+    - 7003:7003
+
+networks:
+  smarthomeoss:
+    external: true
