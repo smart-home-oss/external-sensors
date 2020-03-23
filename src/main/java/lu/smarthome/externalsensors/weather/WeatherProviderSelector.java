@@ -8,15 +8,16 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class WeatherProviderSelector {
 
-    private final AccuweatherpProvider accuweatherpProvider;
+    public static final String ACCUWEATHER = "accuweather";
+    private final AccuweatherProvider accuweatherpProvider;
 
-    @Value("app.selected.provider")
+    @Value("${app.selected.provider}")
     //we will change this into a dynamic information that is retrieved from @Consul
     private String providerName;
 
     public WeatherProvider getProvider() {
 
-        if (providerName.equals("accuweather")) {
+        if (providerName.equals(ACCUWEATHER)) {
 
             return accuweatherpProvider;
         }
