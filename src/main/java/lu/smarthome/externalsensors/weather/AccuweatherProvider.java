@@ -24,7 +24,7 @@ public class AccuweatherProvider implements WeatherProvider {
     @Override
     public AccuweatherResponse retrieve() {
         String url = "http://dataservice.accuweather.com/forecasts/v1/daily/5day/" + "130707_PC";
-        String apiKey = "2N82XZGfHGyALqSd7ZkRxA7vNW8AXEPm";
+        String apiKey = "";
         String language = "en-US";
         Boolean details = Boolean.FALSE;
         Boolean metric = Boolean.TRUE;
