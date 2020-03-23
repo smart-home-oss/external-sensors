@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lu.smarthome.externalsensors.exception.ExternalSensorException;
 import lu.smarthome.externalsensors.weather.accu.AccuweatherResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -16,6 +17,9 @@ public class AccuweatherProvider implements WeatherProvider {
     @Qualifier("accuweather")
     private final RestTemplate restTemplate;
 
+    @Value("${app.selected.provider.accuweather.key}")
+    private String apiKey;
+
     @Override
     public String getName() {
         return this.getClass().getName();
@@ -24,7 +28,6 @@ public class AccuweatherProvider implements WeatherProvider {
     @Override
     public AccuweatherResponse retrieve() {
         String url = "http://dataservice.accuweather.com/forecasts/v1/daily/5day/" + "130707_PC";
-        String apiKey = "";
         String language = "en-US";
         Boolean details = Boolean.FALSE;
         Boolean metric = Boolean.TRUE;
