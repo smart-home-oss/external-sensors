@@ -1,6 +1,7 @@
 package lu.smarthome.externalsensors.weather;
 
 import lombok.RequiredArgsConstructor;
+import lu.smarthome.externalsensors.config.AccuweatherProperties;
 import lu.smarthome.externalsensors.exception.ExternalSensorException;
 import lu.smarthome.externalsensors.weather.accu.AccuweatherResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,11 +15,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequiredArgsConstructor
 public class AccuweatherProvider implements WeatherProvider {
 
+    private final AccuweatherProperties accuweatherProperties;
+
     @Qualifier("accuweather")
     private final RestTemplate restTemplate;
-
-    @Value("${app.selected.provider.accuweather.key}")
-    private String apiKey;
 
     @Override
     public String getName() {
@@ -27,13 +27,14 @@ public class AccuweatherProvider implements WeatherProvider {
 
     @Override
     public AccuweatherResponse retrieve() {
+
         String url = "http://dataservice.accuweather.com/forecasts/v1/daily/5day/" + "130707_PC";
         String language = "en-US";
         Boolean details = Boolean.FALSE;
         Boolean metric = Boolean.TRUE;
 
         UriComponentsBuilder getParams = UriComponentsBuilder.fromHttpUrl(url)
-                .queryParam("apikey", apiKey)
+                .queryParam("apikey", accuweatherProperties.getApiKey())
                 .queryParam("language", language)
                 .queryParam("details", details)
                 .queryParam("metric", metric);
@@ -53,6 +54,9 @@ public class AccuweatherProvider implements WeatherProvider {
 
     @Override
     public boolean supports() {
+        if(accuweatherProperties.getApiKey() == null){
+            return false;
+        }
 
         return true;
     }
