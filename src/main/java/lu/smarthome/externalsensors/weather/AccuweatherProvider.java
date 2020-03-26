@@ -28,16 +28,12 @@ public class AccuweatherProvider implements WeatherProvider {
     @Override
     public AccuweatherResponse retrieve() {
 
-        String url = "http://dataservice.accuweather.com/forecasts/v1/daily/5day/" + "130707_PC";
-        String language = "en-US";
-        Boolean details = Boolean.FALSE;
-        Boolean metric = Boolean.TRUE;
-
-        UriComponentsBuilder getParams = UriComponentsBuilder.fromHttpUrl(url)
+        UriComponentsBuilder getParams = UriComponentsBuilder
+                .fromHttpUrl(accuweatherProperties.getUrlWithLocation())
                 .queryParam("apikey", accuweatherProperties.getApiKey())
-                .queryParam("language", language)
-                .queryParam("details", details)
-                .queryParam("metric", metric);
+                .queryParam("language", accuweatherProperties.getLanguage())
+                .queryParam("details", accuweatherProperties.getDetails())
+                .queryParam("metric", accuweatherProperties.getMetric());
 
         ResponseEntity<AccuweatherResponse> response = restTemplate
                 .getForEntity(

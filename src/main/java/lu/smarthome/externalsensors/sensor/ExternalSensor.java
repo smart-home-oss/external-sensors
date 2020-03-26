@@ -1,4 +1,4 @@
-package lu.smarthome.externalsensors.service;
+package lu.smarthome.externalsensors.sensor;
 
 public interface ExternalSensor {
 

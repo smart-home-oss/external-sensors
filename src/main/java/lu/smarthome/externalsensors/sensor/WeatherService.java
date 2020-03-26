@@ -1,4 +1,4 @@
-package lu.smarthome.externalsensors.service;
+package lu.smarthome.externalsensors.sensor;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class GermanyWeatherService implements ExternalSensor {
+public class WeatherService implements ExternalSensor {
 
     private final WeatherProviderSelector weatherProviderSelector;
 
