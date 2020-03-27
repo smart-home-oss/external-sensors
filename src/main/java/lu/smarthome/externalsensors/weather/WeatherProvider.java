@@ -4,6 +4,6 @@ import lu.smarthome.externalsensors.weather.accu.AccuweatherResponse;
 
 public interface WeatherProvider {
     public String getName();
-    public AccuweatherResponse retrieve();
+    public WeatherResponse retrieve();
     public boolean supports();
 }

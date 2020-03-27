@@ -1,24 +1,26 @@
-package lu.smarthome.externalsensors.weather;
+package lu.smarthome.externalsensors.weather.accu;
 
-import lombok.RequiredArgsConstructor;
 import lu.smarthome.externalsensors.config.AccuweatherProperties;
 import lu.smarthome.externalsensors.exception.ExternalSensorException;
-import lu.smarthome.externalsensors.weather.accu.AccuweatherResponse;
+import lu.smarthome.externalsensors.weather.WeatherProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
-@RequiredArgsConstructor
+
 public class AccuweatherProvider implements WeatherProvider {
 
     private final AccuweatherProperties accuweatherProperties;
 
-    @Qualifier("accuweather")
     private final RestTemplate restTemplate;
+
+    public AccuweatherProvider(AccuweatherProperties accuweatherProperties, @Qualifier("accuweather") RestTemplate restTemplate) {
+        this.accuweatherProperties = accuweatherProperties;
+        this.restTemplate = restTemplate;
+    }
 
     @Override
     public String getName() {
