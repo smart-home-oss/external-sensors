@@ -31,7 +31,7 @@ public class WeatherProviderSelector {
     @PostConstruct
     public void postConstruct() {
         if(appProperties.getWeatherProvider() == null) {
-            log.error("Weather provider was not selected, the collection will fail.");
+            log.error("Weather provider was not set, the collection will fail.");
         }
     }
 
@@ -41,6 +41,6 @@ public class WeatherProviderSelector {
             return providers.get(appProperties.getWeatherProvider());
         }
 
-        throw new ProviderException(WEATHER, appProperties.getWeatherProvider());
+        throw new ProviderException(WEATHER, appProperties.getWeatherProvider(), providers.keySet());
     }
 }
