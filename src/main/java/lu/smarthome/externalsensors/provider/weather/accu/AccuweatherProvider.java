@@ -13,12 +13,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 public class AccuweatherProvider implements WeatherProvider {
 
-    private final AccuweatherProperties accuweatherProperties;
+    private final AccuweatherProperties properties;
 
     private final RestTemplate restTemplate;
 
-    public AccuweatherProvider(AccuweatherProperties accuweatherProperties, @Qualifier("accuweather") RestTemplate restTemplate) {
-        this.accuweatherProperties = accuweatherProperties;
+    public AccuweatherProvider(AccuweatherProperties properties, @Qualifier("accuweather") RestTemplate restTemplate) {
+        this.properties = properties;
         this.restTemplate = restTemplate;
     }
 
@@ -31,11 +31,11 @@ public class AccuweatherProvider implements WeatherProvider {
     public AccuweatherResponse retrieve() {
 
         UriComponentsBuilder getParams = UriComponentsBuilder
-                .fromHttpUrl(accuweatherProperties.getUrlWithLocation())
-                .queryParam("apikey", accuweatherProperties.getApiKey())
-                .queryParam("language", accuweatherProperties.getLanguage())
-                .queryParam("details", accuweatherProperties.getDetails())
-                .queryParam("metric", accuweatherProperties.getMetric());
+                .fromHttpUrl(properties.getUrlWithLocation())
+                .queryParam("apikey", properties.getApiKey())
+                .queryParam("language", properties.getLanguage())
+                .queryParam("details", properties.getDetails())
+                .queryParam("metric", properties.getMetric());
 
         ResponseEntity<AccuweatherResponse> response = restTemplate
                 .getForEntity(
@@ -52,7 +52,7 @@ public class AccuweatherProvider implements WeatherProvider {
 
     @Override
     public boolean supports() {
-        if(accuweatherProperties.getApiKey() == null){
+        if(properties.getApiKey() == null){
             return false;
         }
 
