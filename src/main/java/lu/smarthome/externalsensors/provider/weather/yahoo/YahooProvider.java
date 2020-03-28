@@ -1,14 +1,13 @@
-package lu.smarthome.externalsensors.weather.yahoo;
+package lu.smarthome.externalsensors.provider.weather.yahoo;
 
 import lu.smarthome.externalsensors.config.YahooProperties;
 import lu.smarthome.externalsensors.exception.ExternalSensorException;
 import lu.smarthome.externalsensors.oauth.OauthHelper;
-import lu.smarthome.externalsensors.weather.WeatherProvider;
-import lu.smarthome.externalsensors.weather.WeatherResponse;
+import lu.smarthome.externalsensors.provider.weather.WeatherProvider;
+import lu.smarthome.externalsensors.provider.weather.WeatherResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -20,7 +19,6 @@ import static org.springframework.http.HttpMethod.GET;
 
 @Component
 public class YahooProvider implements WeatherProvider {
-
 
     private final RestTemplate restTemplate;
     private final YahooProperties properties;
@@ -36,7 +34,7 @@ public class YahooProvider implements WeatherProvider {
 
     @Override
     public String getName() {
-        return this.getClass().getName();
+        return "yahoo";
     }
 
     @Override

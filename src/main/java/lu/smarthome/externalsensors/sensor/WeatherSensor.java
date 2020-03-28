@@ -2,9 +2,9 @@ package lu.smarthome.externalsensors.sensor;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lu.smarthome.externalsensors.weather.WeatherProvider;
-import lu.smarthome.externalsensors.weather.WeatherProviderSelector;
-import lu.smarthome.externalsensors.weather.WeatherResponse;
+import lu.smarthome.externalsensors.provider.weather.WeatherProvider;
+import lu.smarthome.externalsensors.provider.weather.WeatherProviderSelector;
+import lu.smarthome.externalsensors.provider.weather.WeatherResponse;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 

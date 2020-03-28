@@ -1,4 +1,4 @@
-package lu.smarthome.externalsensors.weather.accu;
+package lu.smarthome.externalsensors.provider.weather.accu;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
-public class Night {
+public class Day {
 
     private Integer icon;
     private String iconPhrase;
