@@ -50,7 +50,8 @@ public class YahooProvider implements WeatherProvider {
         String url = getUrl();
         String nonce = oauthHelper.getNonce();
         String timestamp = oauthHelper.getNowTimestamp();
-        String oauthSignature = getSignature(nonce, timestamp);
+        String signatureString = getSignatureString(nonce, timestamp);
+        String oauthSignature = getSignature(signatureString);
 
         HttpHeaders headers = getHttpHeaders(oauthSignature);
         HttpEntity<String> request = new HttpEntity<>(null, headers);
@@ -65,7 +66,7 @@ public class YahooProvider implements WeatherProvider {
         throw new ExternalSensorException(response.getStatusCode());
     }
 
-    private String getUrl() {
+    String getUrl() {
         return UriComponentsBuilder
                     .fromHttpUrl(properties.getApiUrl())
                     .queryParam("location", properties.getLocation())
@@ -73,7 +74,12 @@ public class YahooProvider implements WeatherProvider {
                     .toUriString();
     }
 
-    private String getSignature(String nonce, String timestamp) {
+    String getSignature(String signatureString) {
+        byte[] hmac = oauthHelper.hmacSha1(signatureString, properties.getClientSecret() + "&");
+        return oauthHelper.toBase64(hmac);
+    }
+
+    String getSignatureString(String nonce, String timestamp) {
         List<String> parameters = new ArrayList<>();
         parameters.add("oauth_consumer_key=" + properties.getConsumerKey());
         parameters.add("oauth_nonce=" + nonce);
@@ -89,16 +95,12 @@ public class YahooProvider implements WeatherProvider {
             parametersList.append((i > 0) ? "&" : "").append(parameters.get(i));
         }
 
-        String signatureString =
-                GET.name() + "&" +
-                URLEncoder.encode(properties.getApiUrl(), StandardCharsets.UTF_8) + "&" +
-                URLEncoder.encode(parametersList.toString(), StandardCharsets.UTF_8);
-
-        byte[] hmac = oauthHelper.hmacSha1(signatureString, properties.getClientSecret() + "&");
-        return oauthHelper.toBase64(hmac);
+        return GET.name() + "&" +
+        URLEncoder.encode(properties.getApiUrl(), StandardCharsets.UTF_8) + "&" +
+        URLEncoder.encode(parametersList.toString(), StandardCharsets.UTF_8);
     }
 
-    private HttpHeaders getHttpHeaders(String oauthSignature) {
+    HttpHeaders getHttpHeaders(String oauthSignature) {
         HttpHeaders headers = new HttpHeaders();
 
         headers.setContentType(MediaType.APPLICATION_JSON);
