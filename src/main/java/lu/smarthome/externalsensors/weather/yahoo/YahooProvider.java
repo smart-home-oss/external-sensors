@@ -1,7 +1,8 @@
 package lu.smarthome.externalsensors.weather.yahoo;
 
+import lu.smarthome.externalsensors.config.YahooProperties;
 import lu.smarthome.externalsensors.exception.ExternalSensorException;
-import lu.smarthome.externalsensors.oauth.OauthProperties;
+import lu.smarthome.externalsensors.oauth.OauthHelper;
 import lu.smarthome.externalsensors.weather.WeatherProvider;
 import lu.smarthome.externalsensors.weather.WeatherResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,25 +14,24 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SignatureException;
-import java.util.Base64;
 import java.util.Collections;
 
-import static lu.smarthome.externalsensors.oauth.HmacSha1Signature.calculateRFC2104HMAC;
+import static org.springframework.http.HttpMethod.GET;
 
 @Component
 public class YahooProvider implements WeatherProvider {
 
 
     private final RestTemplate restTemplate;
+    private final YahooProperties properties;
+    private final OauthHelper oauthHelper;
 
-    private final OauthProperties oauthProperties;
-
-    public YahooProvider(OauthProperties oauthProperties, @Qualifier("yahoo") RestTemplate restTemplate) {
+    public YahooProvider(OauthHelper oauthHelper,
+                         @Qualifier("yahoo") RestTemplate restTemplate,
+                         YahooProperties properties) {
         this.restTemplate = restTemplate;
-        this.oauthProperties = oauthProperties;
+        this.oauthHelper = oauthHelper;
+        this.properties = properties;
     }
 
     @Override
@@ -41,62 +41,46 @@ public class YahooProvider implements WeatherProvider {
 
     @Override
     public WeatherResponse retrieve() {
+        String url = UriComponentsBuilder
+                .fromHttpUrl(properties.getApiUrl())
+                .queryParam("location", properties.getLocation())
+                .toUriString();
 
-        String location = "trier";
-        String locationCountry = "de";
+        String oauthSignature = getSignature();
 
-        String hmac = null;
-        try {
-            hmac = calculateRFC2104HMAC("data", oauthProperties.getOauth_consumer_key());
-        } catch (SignatureException | NoSuchAlgorithmException | InvalidKeyException e) {
-            e.printStackTrace();
-        }
-
-        String oauth_signature = Base64.getEncoder().encodeToString(hmac.getBytes());
-
-
-        UriComponentsBuilder getParams = UriComponentsBuilder
-                .fromHttpUrl("https://weather-ydn-yql.media.yahoo.com/forecastrss")
-                .queryParam("location", location.concat(",").concat(locationCountry));
-
-
-        HttpHeaders headers = new HttpHeaders();
-
-        headers.add("X-Yahoo-App-Id", oauthProperties.getAppId());
-        headers.add(
-                "Authorization",
-                "OAuth "
-                        .concat("oauth_consumer_key=")
-                        .concat(oauthProperties.getOauth_consumer_key())
-                        .concat(",oauth_signature_method=")
-                        .concat(oauthProperties.getOauth_signature_method())
-                        .concat(",oauth_timestamp=")
-                        .concat(oauthProperties.getOauth_timestamp())
-                        .concat(",oauth_nonce=")
-                        .concat(oauthProperties.getOauth_nonce())
-                        .concat(",oauth_version=")
-                        .concat(oauthProperties.getOauth_version())
-                        .concat(",oauth_signature=")
-                        .concat(oauth_signature)
-        );
-
-        HttpEntity<String> request = new HttpEntity(null, headers);
-
+        HttpHeaders headers = getHttpHeaders(oauthSignature);
+        HttpEntity<String> request = new HttpEntity<>(null, headers);
 
         ResponseEntity<String> response = restTemplate
-                .exchange(
-                        getParams.toUriString(),
-                        HttpMethod.GET,
-                        request,
-                        String.class,
-                        Collections.emptyMap()
-                );
-        if (response.getStatusCode().is2xxSuccessful()) {
+                .exchange(url, GET, request, String.class, Collections.emptyMap());
 
+        if (response.getStatusCode().is2xxSuccessful()) {
             return response::getBody;
         }
 
         throw new ExternalSensorException(response.getStatusCode());
+    }
+
+    private String getSignature() {
+        String hmac = oauthHelper.hmacSha1("data", properties.getClientSecret());
+        return oauthHelper.toBase64(hmac);
+    }
+
+    private HttpHeaders getHttpHeaders(String oauthSignature) {
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.add("X-Yahoo-App-Id", properties.getAppId());
+        headers.add(
+                HttpHeaders.AUTHORIZATION,
+                "OAuth "
+                        .concat("oauth_consumer_key=").concat(properties.getClientId())
+                        .concat(",oauth_signature_method=").concat(properties.getOauthSignatureMethod())
+                        .concat(",oauth_version=").concat(properties.getOauthVersion())
+                        .concat(",oauth_nonce=").concat(oauthHelper.getNonce())
+                        .concat(",oauth_timestamp=").concat(oauthHelper.getNowTimestamp())
+                        .concat(",oauth_signature=").concat(oauthSignature)
+        );
+        return headers;
     }
 
     @Override

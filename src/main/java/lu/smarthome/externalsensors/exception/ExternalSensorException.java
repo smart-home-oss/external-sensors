@@ -7,7 +7,6 @@ public class ExternalSensorException extends RuntimeException {
 
     public ExternalSensorException(HttpStatus statusCode) {
         this.statusCode = statusCode;
-
     }
 
     @Override
