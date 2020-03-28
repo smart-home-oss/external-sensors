@@ -17,7 +17,9 @@ public class WeatherSensor implements ExternalSensor {
 
     @Scheduled(fixedRateString = "${app.sensor.scheduled-rate.weather:600000}")
     public void collect() {
+
         WeatherProvider weatherProvider = weatherProviderSelector.getProvider();
+
         if (weatherProvider.supports()) {
             WeatherResponse response = weatherProvider.retrieve();
             log.info(response.getTemp());

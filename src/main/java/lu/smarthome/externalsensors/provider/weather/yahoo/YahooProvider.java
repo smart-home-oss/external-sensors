@@ -8,12 +8,17 @@ import lu.smarthome.externalsensors.provider.weather.WeatherResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import static org.springframework.http.HttpMethod.GET;
 
@@ -39,12 +44,13 @@ public class YahooProvider implements WeatherProvider {
 
     @Override
     public WeatherResponse retrieve() {
-        String url = UriComponentsBuilder
-                .fromHttpUrl(properties.getApiUrl())
-                .queryParam("location", properties.getLocation())
-                .toUriString();
 
-        String oauthSignature = getSignature();
+        // https://developer.yahoo.com/weather/documentation.html#code-example
+
+        String url = getUrl();
+        String nonce = oauthHelper.getNonce();
+        String timestamp = oauthHelper.getNowTimestamp();
+        String oauthSignature = getSignature(nonce, timestamp);
 
         HttpHeaders headers = getHttpHeaders(oauthSignature);
         HttpEntity<String> request = new HttpEntity<>(null, headers);
@@ -59,25 +65,56 @@ public class YahooProvider implements WeatherProvider {
         throw new ExternalSensorException(response.getStatusCode());
     }
 
-    private String getSignature() {
-        String hmac = oauthHelper.hmacSha1("data", properties.getClientSecret());
+    private String getUrl() {
+        return UriComponentsBuilder
+                    .fromHttpUrl(properties.getApiUrl())
+                    .queryParam("location", properties.getLocation())
+                    .queryParam("format", "json")
+                    .toUriString();
+    }
+
+    private String getSignature(String nonce, String timestamp) {
+        List<String> parameters = new ArrayList<>();
+        parameters.add("oauth_consumer_key=" + properties.getConsumerKey());
+        parameters.add("oauth_nonce=" + nonce);
+        parameters.add("oauth_signature_method=" + properties.getOauthSignatureMethod());
+        parameters.add("oauth_timestamp=" + timestamp);
+        parameters.add("oauth_version=" + properties.getOauthVersion());
+        parameters.add("location=" + URLEncoder.encode(properties.getLocation(), StandardCharsets.UTF_8));
+        parameters.add("format=json");
+        Collections.sort(parameters);
+
+        StringBuilder parametersList = new StringBuilder();
+        for (int i = 0; i < parameters.size(); i++) {
+            parametersList.append((i > 0) ? "&" : "").append(parameters.get(i));
+        }
+
+        String signatureString =
+                GET.name() + "&" +
+                URLEncoder.encode(properties.getApiUrl(), StandardCharsets.UTF_8) + "&" +
+                URLEncoder.encode(parametersList.toString(), StandardCharsets.UTF_8);
+
+        byte[] hmac = oauthHelper.hmacSha1(signatureString, properties.getClientSecret() + "&");
         return oauthHelper.toBase64(hmac);
     }
 
     private HttpHeaders getHttpHeaders(String oauthSignature) {
         HttpHeaders headers = new HttpHeaders();
 
+        headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("X-Yahoo-App-Id", properties.getAppId());
         headers.add(
                 HttpHeaders.AUTHORIZATION,
                 "OAuth "
-                        .concat("oauth_consumer_key=").concat(properties.getClientId())
-                        .concat(",oauth_signature_method=").concat(properties.getOauthSignatureMethod())
-                        .concat(",oauth_version=").concat(properties.getOauthVersion())
-                        .concat(",oauth_nonce=").concat(oauthHelper.getNonce())
-                        .concat(",oauth_timestamp=").concat(oauthHelper.getNowTimestamp())
-                        .concat(",oauth_signature=").concat(oauthSignature)
+                        .concat("oauth_consumer_key=\"").concat(properties.getClientId())
+                        .concat("\", oauth_nonce=\"").concat(oauthHelper.getNonce())
+                        .concat("\", oauth_timestamp=\"").concat(oauthHelper.getNowTimestamp())
+                        .concat("\", oauth_signature_method=\"").concat(properties.getOauthSignatureMethod())
+                        .concat("\", oauth_signature=\"").concat(oauthSignature)
+                        .concat("\", oauth_version=\"").concat(properties.getOauthVersion())
+                        .concat("\"")
         );
+
         return headers;
     }
 

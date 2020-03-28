@@ -14,12 +14,14 @@ public class YahooProperties {
      * Client ID, known as Consumer Key
      */
     private String clientId;
+
+    /**
+     * Client Secret, known as Consumer Secret
+     */
     private String clientSecret;
+
     private String locality = "trier";
     private String countryCode = "de";
-
-    private String oauthSignatureMethod = "HMAC-SHA1";
-    private String oauthVersion = "1.0";
 
     public String getLocation() {
         return locality.concat(",").concat(countryCode);
@@ -42,6 +44,10 @@ public class YahooProperties {
     }
 
     public String getClientId() {
+        return clientId;
+    }
+
+    public String getConsumerKey() {
         return clientId;
     }
 
@@ -74,18 +80,10 @@ public class YahooProperties {
     }
 
     public String getOauthSignatureMethod() {
-        return oauthSignatureMethod;
-    }
-
-    public void setOauthSignatureMethod(String oauthSignatureMethod) {
-        this.oauthSignatureMethod = oauthSignatureMethod;
+        return "HMAC-SHA1";
     }
 
     public String getOauthVersion() {
-        return oauthVersion;
-    }
-
-    public void setOauthVersion(String oauthVersion) {
-        this.oauthVersion = oauthVersion;
+        return "1.0";
     }
 }
