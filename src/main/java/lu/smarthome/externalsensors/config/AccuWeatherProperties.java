@@ -3,9 +3,9 @@ package lu.smarthome.externalsensors.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-@ConfigurationProperties("app.provider.accuweather")
+@ConfigurationProperties("app.provider.weather.accuweather")
 @Component
-public class AccuweatherProperties {
+public class AccuWeatherProperties {
 
     private String apiKey;
 

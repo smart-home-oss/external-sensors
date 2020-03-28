@@ -3,9 +3,9 @@ package lu.smarthome.externalsensors.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-@ConfigurationProperties("app.provider.yahoo")
+@ConfigurationProperties("app.provider.weather.yahoo")
 @Component
-public class YahooProperties {
+public class YahooWeatherProperties {
 
     private String apiUrl = "https://weather-ydn-yql.media.yahoo.com/forecastrss";
     private String appId;

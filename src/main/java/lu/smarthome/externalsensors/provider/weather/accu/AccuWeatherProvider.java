@@ -1,6 +1,6 @@
 package lu.smarthome.externalsensors.provider.weather.accu;
 
-import lu.smarthome.externalsensors.config.AccuweatherProperties;
+import lu.smarthome.externalsensors.config.AccuWeatherProperties;
 import lu.smarthome.externalsensors.exception.ExternalSensorException;
 import lu.smarthome.externalsensors.provider.weather.WeatherProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,13 +11,13 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
 
-public class AccuweatherProvider implements WeatherProvider {
+public class AccuWeatherProvider implements WeatherProvider {
 
-    private final AccuweatherProperties properties;
+    private final AccuWeatherProperties properties;
 
     private final RestTemplate restTemplate;
 
-    public AccuweatherProvider(AccuweatherProperties properties, @Qualifier("accuweather") RestTemplate restTemplate) {
+    public AccuWeatherProvider(AccuWeatherProperties properties, @Qualifier("accuweather") RestTemplate restTemplate) {
         this.properties = properties;
         this.restTemplate = restTemplate;
     }
@@ -28,7 +28,7 @@ public class AccuweatherProvider implements WeatherProvider {
     }
 
     @Override
-    public AccuweatherResponse retrieve() {
+    public AccuWeatherResponse retrieve() {
 
         UriComponentsBuilder getParams = UriComponentsBuilder
                 .fromHttpUrl(properties.getUrlWithLocation())
@@ -37,10 +37,10 @@ public class AccuweatherProvider implements WeatherProvider {
                 .queryParam("details", properties.getDetails())
                 .queryParam("metric", properties.getMetric());
 
-        ResponseEntity<AccuweatherResponse> response = restTemplate
+        ResponseEntity<AccuWeatherResponse> response = restTemplate
                 .getForEntity(
                         getParams.toUriString(),
-                        AccuweatherResponse.class
+                        AccuWeatherResponse.class
                 );
         if (response.getStatusCode().is2xxSuccessful()) {
 

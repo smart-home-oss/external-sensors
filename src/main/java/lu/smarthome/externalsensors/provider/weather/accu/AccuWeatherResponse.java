@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
-public class AccuweatherResponse implements WeatherResponse {
+public class AccuWeatherResponse implements WeatherResponse {
 
     private Headline headline;
     private List<DailyForecast> dailyForecasts = null;
