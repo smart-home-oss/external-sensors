@@ -26,4 +26,12 @@ public class WeatherProviderConfig {
         return restTemplate;
     }
 
+    @Bean
+    @Qualifier("darksky")
+    public RestTemplate restTemplateDarkSky() {
+        RestTemplate restTemplate = new RestTemplate();
+
+        return restTemplate;
+    }
+
 }
