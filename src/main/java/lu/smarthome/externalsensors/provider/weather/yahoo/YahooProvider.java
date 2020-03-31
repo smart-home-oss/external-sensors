@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -68,10 +69,10 @@ public class YahooProvider implements WeatherProvider {
 
     String getUrl() {
         return UriComponentsBuilder
-                    .fromHttpUrl(properties.getApiUrl())
-                    .queryParam("location", properties.getLocation())
-                    .queryParam("format", "json")
-                    .toUriString();
+                .fromHttpUrl(properties.getApiUrl())
+                .queryParam("location", properties.getLocation())
+                .queryParam("format", "json")
+                .toUriString();
     }
 
     String getSignature(String signatureString) {
@@ -86,7 +87,11 @@ public class YahooProvider implements WeatherProvider {
         parameters.add("oauth_signature_method=" + properties.getOauthSignatureMethod());
         parameters.add("oauth_timestamp=" + timestamp);
         parameters.add("oauth_version=" + properties.getOauthVersion());
-        parameters.add("location=" + URLEncoder.encode(properties.getLocation(), StandardCharsets.UTF_8));
+        try {
+            parameters.add("location=" + URLEncoder.encode(properties.getLocation(), "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         parameters.add("format=json");
         Collections.sort(parameters);
 
@@ -95,9 +100,15 @@ public class YahooProvider implements WeatherProvider {
             parametersList.append((i > 0) ? "&" : "").append(parameters.get(i));
         }
 
-        return GET.name() + "&" +
-        URLEncoder.encode(properties.getApiUrl(), StandardCharsets.UTF_8) + "&" +
-        URLEncoder.encode(parametersList.toString(), StandardCharsets.UTF_8);
+        try {
+            return GET.name() + "&" +
+                    URLEncoder.encode(properties.getApiUrl(), "UTF-8") + "&" +
+                    URLEncoder.encode(parametersList.toString(), "UTF-8");
+        } catch (Exception e) {
+
+        }
+
+        throw new RuntimeException();
     }
 
     HttpHeaders getHttpHeaders(String oauthSignature) {
