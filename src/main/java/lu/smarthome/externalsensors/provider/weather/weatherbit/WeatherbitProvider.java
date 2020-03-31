@@ -35,23 +35,24 @@ public class WeatherbitProvider implements WeatherProvider {
         UriComponentsBuilder getParams = UriComponentsBuilder
                 .fromHttpUrl(properties.getUrl())
                 .queryParam("key", properties.getApiKey())
+                .queryParam("lang", properties.getLang())
                 .queryParam("city", properties.getCity())
                 .queryParam("country", properties.getCounty());
 
-        ResponseEntity<String> response;
+        ResponseEntity<WeaterbitResponse> response;
 
         try {
             response = restTemplate
                     .getForEntity(
                             getParams.toUriString(),
-                            String.class
+                            WeaterbitResponse.class
                     );
         } catch (HttpServerErrorException e) {
             throw new ExternalSensorException(e.getStatusCode());
         }
 
         if (response.getStatusCode().is2xxSuccessful()) {
-            return response::getBody;
+            return response.getBody();
         }
 
         throw new ExternalSensorException(response.getStatusCode());
@@ -59,7 +60,7 @@ public class WeatherbitProvider implements WeatherProvider {
 
     @Override
     public boolean supports() {
-        if(properties.getApiKey() == null){
+        if (properties.getApiKey() == null) {
             return false;
         }
 
