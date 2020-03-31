@@ -9,6 +9,10 @@ public class ExternalSensorException extends RuntimeException {
         this.statusCode = statusCode;
     }
 
+    public ExternalSensorException(String s, Exception e) {
+        super(s, e);
+    }
+
     @Override
     public String getMessage() {
         return String.format(

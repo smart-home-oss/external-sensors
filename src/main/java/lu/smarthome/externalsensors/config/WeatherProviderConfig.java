@@ -11,6 +11,12 @@ import org.springframework.web.client.RestTemplate;
 public class WeatherProviderConfig {
 
     @Bean
+    @Qualifier("generic")
+    public RestTemplate restTemplateGeneric() {
+        return new RestTemplate();
+    }
+
+    @Bean
     @Qualifier("accuweather")
     public RestTemplate restTemplateAccu() {
         RestTemplate restTemplate = new RestTemplate();
