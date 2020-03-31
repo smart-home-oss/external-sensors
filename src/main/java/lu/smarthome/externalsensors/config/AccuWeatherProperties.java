@@ -44,7 +44,7 @@ public class AccuWeatherProperties {
     }
 
     public String getUrlWithLocation(){
-        return url + location;
+        return url.concat("/").concat(location).replace("//", "/");
     }
 
     public String getApiKey() {
