@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lu.smarthome.externalsensors.exception.ProviderException;
 import lu.smarthome.externalsensors.provider.airquality.AirQualityResponse;
-import lu.smarthome.externalsensors.provider.weather.WeatherResponse;
 
 import java.util.ArrayList;
 import java.util.HashMap;
