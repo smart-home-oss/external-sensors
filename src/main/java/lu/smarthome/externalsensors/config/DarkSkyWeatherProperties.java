@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DarkSkyWeatherProperties {
 
+
     private String apiUrl;
     private String appId;
     private String latitude = "49.797955";
