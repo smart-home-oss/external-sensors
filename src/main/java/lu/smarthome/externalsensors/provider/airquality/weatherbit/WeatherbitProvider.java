@@ -1,6 +1,6 @@
 package lu.smarthome.externalsensors.provider.airquality.weatherbit;
 
-import lu.smarthome.externalsensors.config.WeatherbitWeatherProperties;
+import lu.smarthome.externalsensors.config.WeatherbitAirQualityProperties;
 import lu.smarthome.externalsensors.exception.ExternalSensorException;
 import lu.smarthome.externalsensors.provider.airquality.AirQualityProvider;
 import lu.smarthome.externalsensors.provider.airquality.AirQualityResponse;
@@ -11,15 +11,15 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-@Component
-
+@Qualifier("air-quality")
+@Component("weatherbit-airquality")
 public class WeatherbitProvider implements AirQualityProvider {
 
-    private final WeatherbitWeatherProperties properties;
+    private final WeatherbitAirQualityProperties properties;
 
     private final RestTemplate restTemplate;
 
-    public WeatherbitProvider(WeatherbitWeatherProperties properties, @Qualifier("generic") RestTemplate restTemplate) {
+    public WeatherbitProvider(WeatherbitAirQualityProperties properties, @Qualifier("generic") RestTemplate restTemplate) {
         this.properties = properties;
         this.restTemplate = restTemplate;
     }
@@ -39,13 +39,13 @@ public class WeatherbitProvider implements AirQualityProvider {
                 .queryParam("city", properties.getCity())
                 .queryParam("country", properties.getCounty());
 
-        ResponseEntity<AirQualityResponse> response;
+        ResponseEntity<WeaterbitResponse> response;
 
         try {
             response = restTemplate
                     .getForEntity(
                             getParams.toUriString(),
-                            AirQualityResponse.class
+                            WeaterbitResponse.class
                     );
         } catch (HttpServerErrorException e) {
             throw new ExternalSensorException(e.getStatusCode());

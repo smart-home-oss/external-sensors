@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
 import lombok.Setter;
 import lu.smarthome.externalsensors.exception.ProviderException;
+import lu.smarthome.externalsensors.provider.airquality.AirQualityResponse;
 import lu.smarthome.externalsensors.provider.weather.WeatherResponse;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,11 +16,16 @@ import java.util.Map;
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class WeaterbitResponse implements WeatherResponse {
+public class WeaterbitResponse implements AirQualityResponse {
 
-    private List<Datum> data;
-    private Integer count;
-    private Map<String, Object> additionalProperties = new HashMap<>();
+    public Integer lat;
+    public Integer lon;
+    public String timezone;
+    public String cityName;
+    public String countryCode;
+    public String stateCode;
+    public List<Datum> data = new ArrayList<>();
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
@@ -29,11 +36,11 @@ public class WeaterbitResponse implements WeatherResponse {
     }
 
     @Override
-    public String getTemp() {
-        if(count < 1) {
+    public String getIndex() {
+        if(data.size() < 1) {
             throw new ProviderException("Could not get enough data");
         }
 
-        return data.get(0).getTemp().toString();
+        return data.get(0).co.toString();
     }
 }

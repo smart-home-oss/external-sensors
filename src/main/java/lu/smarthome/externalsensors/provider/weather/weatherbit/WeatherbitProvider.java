@@ -11,8 +11,8 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-@Component
-
+@Qualifier("weather")
+@Component("weatherbit-weather")
 public class WeatherbitProvider implements WeatherProvider {
 
     private final WeatherbitWeatherProperties properties;

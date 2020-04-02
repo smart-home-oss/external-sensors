@@ -2,6 +2,7 @@ package lu.smarthome.externalsensors.sensor;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lu.smarthome.externalsensors.provider.ProviderType;
 import lu.smarthome.externalsensors.provider.airquality.AirQualityProvider;
 import lu.smarthome.externalsensors.provider.airquality.AirQualityProviderSelector;
 import lu.smarthome.externalsensors.provider.airquality.AirQualityResponse;
@@ -22,7 +23,7 @@ public class AirQualitySensor implements ExternalSensor {
 
         if (provider.supports()) {
             AirQualityResponse response = provider.retrieve();
-            log.info(response.getIndex());
+            log.info(ProviderType.AIR_QUALITY + ": " + response.getIndex());
         } else {
             log.warn("The requested provider is not supported, provider name: " + provider.getName());
         }

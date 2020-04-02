@@ -2,6 +2,7 @@ package lu.smarthome.externalsensors.sensor;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lu.smarthome.externalsensors.provider.ProviderType;
 import lu.smarthome.externalsensors.provider.weather.WeatherProvider;
 import lu.smarthome.externalsensors.provider.weather.WeatherProviderSelector;
 import lu.smarthome.externalsensors.provider.weather.WeatherResponse;
@@ -22,7 +23,7 @@ public class WeatherSensor implements ExternalSensor {
 
         if (weatherProvider.supports()) {
             WeatherResponse response = weatherProvider.retrieve();
-            log.info(response.getTemp());
+            log.info(ProviderType.WEATHER + ": " + response.getTemp());
         } else {
             log.warn("The requested provider is not supported, provider name: " + weatherProvider.getName());
         }
