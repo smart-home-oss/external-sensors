@@ -1,5 +1,5 @@
 package lu.smarthome.externalsensors.provider;
 
 public enum ProviderType {
-    WEATHER
+    WEATHER, AIR_QUALITY
 }
