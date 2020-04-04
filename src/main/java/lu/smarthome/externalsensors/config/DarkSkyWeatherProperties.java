@@ -42,4 +42,7 @@ public class DarkSkyWeatherProperties {
     public void setLongitude(String longitude) { this.longitude = longitude; }
 
     public String getUrlWithLocation(){ return apiUrl + appId + "/" + getLocation(); }
+
+    public String getUnits() { return "auto"; }
+
 }
