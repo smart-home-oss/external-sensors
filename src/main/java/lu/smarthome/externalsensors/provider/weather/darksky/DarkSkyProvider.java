@@ -32,7 +32,8 @@ public class DarkSkyProvider implements WeatherProvider {
     public WeatherResponse retrieve() {
 
         UriComponentsBuilder getParams = UriComponentsBuilder
-                .fromHttpUrl(properties.getUrlWithLocation());
+                .fromHttpUrl(properties.getUrlWithLocation())
+                .queryParam("units", properties.getUnits());
 
         ResponseEntity<DarkSkyWeatherResponse> response = restTemplate
                 .getForEntity(
