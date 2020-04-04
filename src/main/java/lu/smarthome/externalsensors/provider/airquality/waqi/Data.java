@@ -18,11 +18,11 @@ public class Data {
     private Time time;
     private Debug debug;
 
-    public Integer getIdx() {
-        return idx;
+    public Integer getAqi() {
+        return aqi;
     }
 
-    public void setIdx(Integer idx) {
-        this.idx = idx;
+    public void setAqi(Integer aqi) {
+        this.aqi = aqi;
     }
 }

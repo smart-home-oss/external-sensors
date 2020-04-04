@@ -13,6 +13,6 @@ public class WaqiResponse implements AirQualityResponse {
 
     @Override
     public String getIndex() {
-        return String.valueOf(data.getIdx());
+        return String.valueOf(data.getAqi());
     }
 }
