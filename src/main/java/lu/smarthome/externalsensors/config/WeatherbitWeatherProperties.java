@@ -10,7 +10,7 @@ public class WeatherbitWeatherProperties {
     private String apiKey;
     private String url;
     private String city;
-    private String county;
+    private String country;
     private String lang;
 
     public String getApiKey() {
@@ -37,12 +37,12 @@ public class WeatherbitWeatherProperties {
         this.city = city;
     }
 
-    public Object getCounty() {
-        return county;
+    public Object getCountry() {
+        return country;
     }
 
-    public void setCounty(String county) {
-        this.county = county;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public String getLang() {

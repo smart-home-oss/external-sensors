@@ -1,6 +1,6 @@
-package lu.smarthome.externalsensors.provider.airquality.weatherbit;
+package lu.smarthome.externalsensors.provider.airquality.airvisual;
 
-import lu.smarthome.externalsensors.config.WeatherbitAirQualityProperties;
+import lu.smarthome.externalsensors.config.AirVisualAirQualityProperties;
 import lu.smarthome.externalsensors.exception.ExternalSensorException;
 import lu.smarthome.externalsensors.provider.airquality.AirQualityProvider;
 import lu.smarthome.externalsensors.provider.airquality.AirQualityResponse;
@@ -12,21 +12,21 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Qualifier("air-quality")
-@Component("weatherbit-airquality")
-public class WeatherbitProvider implements AirQualityProvider {
+@Component("airvisual-airquality")
+public class AirVisualProvider implements AirQualityProvider {
 
-    private final WeatherbitAirQualityProperties properties;
+    private final AirVisualAirQualityProperties properties;
 
     private final RestTemplate restTemplate;
 
-    public WeatherbitProvider(WeatherbitAirQualityProperties properties, @Qualifier("generic") RestTemplate restTemplate) {
+    public AirVisualProvider(AirVisualAirQualityProperties properties, @Qualifier("generic") RestTemplate restTemplate) {
         this.properties = properties;
         this.restTemplate = restTemplate;
     }
 
     @Override
     public String getName() {
-        return "weatherbit";
+        return "airvisual";
     }
 
     @Override
@@ -35,17 +35,17 @@ public class WeatherbitProvider implements AirQualityProvider {
         UriComponentsBuilder getParams = UriComponentsBuilder
                 .fromHttpUrl(properties.getUrl())
                 .queryParam("key", properties.getApiKey())
-                .queryParam("lang", properties.getLang())
                 .queryParam("city", properties.getCity())
+                .queryParam("state", properties.getState())
                 .queryParam("country", properties.getCountry());
 
-        ResponseEntity<WeaterbitResponse> response;
+        ResponseEntity<AirVisualResponse> response;
 
         try {
             response = restTemplate
                     .getForEntity(
-                            getParams.toUriString(),
-                            WeaterbitResponse.class
+                            getParams.encode().build().toUri(),
+                            AirVisualResponse.class
                     );
         } catch (HttpServerErrorException e) {
             throw new ExternalSensorException(e.getStatusCode());

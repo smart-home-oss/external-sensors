@@ -4,14 +4,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties("app.provider.air-quality.weatherbit")
-public class WeatherbitAirQualityProperties {
+@ConfigurationProperties("app.provider.air-quality.airvisual")
+public class AirVisualAirQualityProperties {
 
     private String apiKey;
     private String url;
     private String city;
+    private String state;
     private String country;
-    private String lang;
 
     public String getApiKey() {
         return apiKey;
@@ -29,7 +29,7 @@ public class WeatherbitAirQualityProperties {
         this.url = url;
     }
 
-    public Object getCity() {
+    public String getCity() {
         return city;
     }
 
@@ -37,7 +37,7 @@ public class WeatherbitAirQualityProperties {
         this.city = city;
     }
 
-    public Object getCountry() {
+    public String getCountry() {
         return country;
     }
 
@@ -45,11 +45,11 @@ public class WeatherbitAirQualityProperties {
         this.country = country;
     }
 
-    public String getLang() {
-        return lang;
+    public String getState() {
+        return state;
     }
 
-    public void setLang(String lang) {
-        this.lang = lang;
+    public void setState(String state) {
+        this.state = state;
     }
 }

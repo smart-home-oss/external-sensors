@@ -37,7 +37,7 @@ public class WeatherbitProvider implements WeatherProvider {
                 .queryParam("key", properties.getApiKey())
                 .queryParam("lang", properties.getLang())
                 .queryParam("city", properties.getCity())
-                .queryParam("country", properties.getCounty());
+                .queryParam("country", properties.getCountry());
 
         ResponseEntity<WeaterbitResponse> response;
 
