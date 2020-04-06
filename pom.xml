@@ -19,6 +19,8 @@
 		<sonar.organization>smart-home-oss</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<org.mapstruct.version>1.3.1.Final</org.mapstruct.version>
+<!--		https://discuss.elastic.co/t/issue-with-high-level-rest-client-api/195853/3  -->
+		<elasticsearch.version>7.6.2</elasticsearch.version>
 	</properties>
 
 	<dependencies>
@@ -34,7 +36,7 @@
 		<dependency>
 			<groupId>org.elasticsearch.client</groupId>
 			<artifactId>elasticsearch-rest-high-level-client</artifactId>
-			<version>7.6.2</version>
+			<version>${elasticsearch.version}</version>
 		</dependency>
 
 		<dependency>
@@ -57,11 +59,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>net.logstash.logback</groupId>
-			<artifactId>logstash-logback-encoder</artifactId>
-			<version>6.3</version>
 		</dependency>
 
 		<!-- TEST-->
