@@ -59,7 +59,7 @@ public class WeatherbitProvider implements WeatherProvider {
     }
 
     @Override
-    public boolean supports() {
+    public boolean isHealthy() {
         if (properties.getApiKey() == null) {
             return false;
         }
