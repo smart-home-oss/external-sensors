@@ -1,6 +1,6 @@
 package lu.smarthome.externalsensors.provider.weather.weatherbit;
 
-import lu.smarthome.externalsensors.config.WeatherbitWeatherProperties;
+import lu.smarthome.externalsensors.config.properties.WeatherbitWeatherProperties;
 import lu.smarthome.externalsensors.exception.ExternalSensorException;
 import lu.smarthome.externalsensors.provider.weather.WeatherProvider;
 import lu.smarthome.externalsensors.provider.weather.WeatherResponse;

@@ -84,7 +84,9 @@ public class ElasticsearchLoggingAppender extends AppenderBase<ILoggingEvent> {
         String jsonString = buildJsonString(event, stackTraceLite, messageDetails);
         request.source(jsonString, XContentType.JSON);
 
-        client.indexAsync(request, RequestOptions.DEFAULT, new ActionListener<>() {
+        final RequestOptions options = RequestOptions.DEFAULT.toBuilder().build();
+
+        client.indexAsync(request, options, new ActionListener<>() {
             @Override
             public void onResponse(IndexResponse indexResponse) {
                 if(!allGood) {

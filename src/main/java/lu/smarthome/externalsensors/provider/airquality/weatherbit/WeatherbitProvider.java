@@ -1,6 +1,6 @@
 package lu.smarthome.externalsensors.provider.airquality.weatherbit;
 
-import lu.smarthome.externalsensors.config.WeatherbitAirQualityProperties;
+import lu.smarthome.externalsensors.config.properties.WeatherbitAirQualityProperties;
 import lu.smarthome.externalsensors.exception.ExternalSensorException;
 import lu.smarthome.externalsensors.provider.airquality.AirQualityProvider;
 import lu.smarthome.externalsensors.provider.airquality.AirQualityResponse;

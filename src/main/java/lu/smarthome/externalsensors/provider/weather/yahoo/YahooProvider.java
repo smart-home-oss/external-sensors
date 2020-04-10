@@ -1,6 +1,6 @@
 package lu.smarthome.externalsensors.provider.weather.yahoo;
 
-import lu.smarthome.externalsensors.config.YahooWeatherProperties;
+import lu.smarthome.externalsensors.config.properties.YahooWeatherProperties;
 import lu.smarthome.externalsensors.exception.ExternalSensorException;
 import lu.smarthome.externalsensors.oauth.OauthHelper;
 import lu.smarthome.externalsensors.provider.weather.WeatherProvider;
@@ -16,7 +16,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

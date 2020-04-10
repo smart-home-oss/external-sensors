@@ -1,7 +1,7 @@
 package lu.smarthome.externalsensors.provider.airquality;
 
 import lombok.extern.slf4j.Slf4j;
-import lu.smarthome.externalsensors.config.AppProperties;
+import lu.smarthome.externalsensors.config.properties.AppProperties;
 import lu.smarthome.externalsensors.exception.ProviderException;
 import org.springframework.stereotype.Component;
 
