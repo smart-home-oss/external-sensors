@@ -34,11 +34,10 @@ public class OpenWeatherProvider implements WeatherProvider {
 
 
         UriComponentsBuilder getParams = UriComponentsBuilder
-                .fromHttpUrl(properties.getUrlWithLocation())
+                .fromHttpUrl(properties.getUrl())
                 .queryParam("apikey", properties.getApiKey())
-                .queryParam("language", properties.getLanguage())
-                .queryParam("details", properties.getDetails())
-                .queryParam("metric", properties.getMetric());
+                .queryParam("city", properties.getCity())
+                .queryParam("country", properties.getCountry());
 
         ResponseEntity<AccuWeatherResponse> response = restTemplate
                 .getForEntity(
@@ -56,7 +55,9 @@ public class OpenWeatherProvider implements WeatherProvider {
     @Override
     public boolean isHealthy() {
 
-        if(properties.getApiKey() == null){
+        if (properties.getApiKey() == null) {
             return false;
-    } return true;
+        }
+        return true;
+    }
 }
