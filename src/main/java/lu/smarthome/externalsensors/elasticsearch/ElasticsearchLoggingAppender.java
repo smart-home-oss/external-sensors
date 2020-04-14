@@ -37,7 +37,7 @@ public class ElasticsearchLoggingAppender extends AppenderBase<ILoggingEvent> {
         super.start();
         log.info("Elasticsearch appender is starting, index: " + INDEX_NAME);
 
-        packageNameRoot = getClass().getPackageName().replace(".elasticsearch", "");
+        packageNameRoot = getClass().getCanonicalName().replace(".elasticsearch" + getClass().getName(), "");
 
         client = new RestHighLevelClient(
                 RestClient.builder(
@@ -86,7 +86,7 @@ public class ElasticsearchLoggingAppender extends AppenderBase<ILoggingEvent> {
 
         final RequestOptions options = RequestOptions.DEFAULT.toBuilder().build();
 
-        client.indexAsync(request, options, new ActionListener<>() {
+        client.indexAsync(request, options, new ActionListener<IndexResponse>() {
             @Override
             public void onResponse(IndexResponse indexResponse) {
                 if(!allGood) {
