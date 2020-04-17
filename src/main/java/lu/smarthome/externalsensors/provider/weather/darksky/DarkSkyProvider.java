@@ -49,7 +49,7 @@ public class DarkSkyProvider implements WeatherProvider {
     }
 
     @Override
-    public boolean supports() {
+    public boolean isHealthy() {
         if (properties.getAppId() == null) {
             return false;
         }

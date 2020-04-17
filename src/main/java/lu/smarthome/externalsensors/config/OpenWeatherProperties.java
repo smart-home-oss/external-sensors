@@ -33,6 +33,10 @@ public class OpenWeatherProperties {
         this.url = url;
     }
 
+    public String getParameters(){
+        return city.concat(",").concat(country);
+    }
+
     public String getCity() {
         return city;
     }

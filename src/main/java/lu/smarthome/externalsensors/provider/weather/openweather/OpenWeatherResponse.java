@@ -17,6 +17,7 @@ public class OpenWeatherResponse implements WeatherResponse {
     private List<Weather> weather;
     private String base;
     private Temperature main;
+    private String visibility;
     private Wind wind;
     private Clouds clouds;
     private long dt;

@@ -4,7 +4,6 @@ import lu.smarthome.externalsensors.config.OpenWeatherProperties;
 import lu.smarthome.externalsensors.exception.ExternalSensorException;
 import lu.smarthome.externalsensors.provider.weather.WeatherProvider;
 import lu.smarthome.externalsensors.provider.weather.WeatherResponse;
-import lu.smarthome.externalsensors.provider.weather.accu.AccuWeatherResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -33,16 +32,17 @@ public class OpenWeatherProvider implements WeatherProvider {
     public WeatherResponse retrieve() {
 
 
-        UriComponentsBuilder getParams = UriComponentsBuilder
+        String url = UriComponentsBuilder
                 .fromHttpUrl(properties.getUrl())
-                .queryParam("apikey", properties.getApiKey())
-                .queryParam("city", properties.getCity())
-                .queryParam("country", properties.getCountry());
+                .queryParam("q", properties.getParameters())
+                .queryParam("APPID", properties.getApiKey())
+                .encode()
+                .toUriString();
 
-        ResponseEntity<AccuWeatherResponse> response = restTemplate
+        ResponseEntity<OpenWeatherResponse> response = restTemplate
                 .getForEntity(
-                        getParams.toUriString(),
-                        AccuWeatherResponse.class
+                        url,
+                        OpenWeatherResponse.class
                 );
         if (response.getStatusCode().is2xxSuccessful()) {
 

@@ -10,6 +10,6 @@ import lombok.Setter;
 @JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
 public class Coordinates {
 
-    private Integer lon;
-    private Integer lat;
+    private double lon;
+    private double lat;
 }
