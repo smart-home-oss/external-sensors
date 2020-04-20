@@ -8,8 +8,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class Clouds {
+public class Rain {
 
-    private int all;
-
+    private int oneH;
+    private int threeH;
 }

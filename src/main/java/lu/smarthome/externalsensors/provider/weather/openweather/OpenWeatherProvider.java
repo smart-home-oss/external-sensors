@@ -2,6 +2,8 @@ package lu.smarthome.externalsensors.provider.weather.openweather;
 
 import lu.smarthome.externalsensors.config.OpenWeatherProperties;
 import lu.smarthome.externalsensors.exception.ExternalSensorException;
+import lu.smarthome.externalsensors.provider.FormatMode;
+import lu.smarthome.externalsensors.provider.UnitsFormat;
 import lu.smarthome.externalsensors.provider.weather.WeatherProvider;
 import lu.smarthome.externalsensors.provider.weather.WeatherResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,8 +36,11 @@ public class OpenWeatherProvider implements WeatherProvider {
 
         String url = UriComponentsBuilder
                 .fromHttpUrl(properties.getUrl())
-                .queryParam("q", properties.getParameters())
-                .queryParam("APPID", properties.getApiKey())
+                .queryParam("q", properties.getParametersForUS())
+                .queryParam("units", UnitsFormat.METRIC)
+                .queryParam("mode", FormatMode.JSON)
+                .queryParam("lang", properties.getLang())
+                .queryParam("appid", properties.getApiKey())
                 .encode()
                 .toUriString();
 

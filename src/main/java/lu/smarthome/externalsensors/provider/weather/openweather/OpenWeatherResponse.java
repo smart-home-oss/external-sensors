@@ -10,25 +10,27 @@ import java.util.List;
 
 @Getter
 @Setter
-@JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class OpenWeatherResponse implements WeatherResponse {
 
-    private Coordinates coord;
-    private List<Weather> weather;
+    private Coord coord;
+    private List<Weather> weather = null;
     private String base;
-    private Temperature main;
-    private String visibility;
+    private Main main;
+    private int visibility;
     private Wind wind;
     private Clouds clouds;
-    private long dt;
-    private GeneralData sys;
-    private long timezone;
-    private long id;
+    private Rain rain;
+    private Snow snow;
+    private int dt;
+    private Sys sys;
+    private int timezone;
+    private int id;
     private String name;
-    private Integer cod;
+    private int cod;
 
     @Override
     public String getTemp() {
-        return String.valueOf(this.getMain().getTemp_max());
+        return String.valueOf(this.getMain().getTemp());
     }
 }

@@ -17,6 +17,38 @@ public class OpenWeatherProperties {
 
     private String country;
 
+    private String units;
+
+    private String lang;
+
+    public String getParameters(){
+        return city.concat(",").concat(country);
+    }
+
+    public String getParametersForUS(){
+        return city
+                .concat(",")
+                .concat(state)
+                .concat(",")
+                .concat(country);
+    }
+
+    public String getLang() {
+        return lang;
+    }
+
+    public void setLang(String lang) {
+        this.lang = lang;
+    }
+
+    public String getUnits() {
+        return units;
+    }
+
+    public void setUnits(String units) {
+        this.units = units;
+    }
+
     public String getApiKey() {
         return apiKey;
     }
@@ -31,10 +63,6 @@ public class OpenWeatherProperties {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public String getParameters(){
-        return city.concat(",").concat(country);
     }
 
     public String getCity() {

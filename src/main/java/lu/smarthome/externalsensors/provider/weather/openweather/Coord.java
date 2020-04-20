@@ -7,14 +7,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
-public class GeneralData {
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+public class Coord {
 
-    private Integer type;
-    private long id;
-    private double message;
-    private String country;
-    private double sunrise;
-    private double sunset;
-
+    private float lon;
+    private float lat;
 }

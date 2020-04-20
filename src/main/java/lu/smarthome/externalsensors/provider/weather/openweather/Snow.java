@@ -7,9 +7,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
-public class Coordinates {
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+public class Snow {
 
-    private double lon;
-    private double lat;
+    private int oneH;
+    private int threeH;
 }

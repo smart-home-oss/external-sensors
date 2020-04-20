@@ -8,8 +8,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class Clouds {
+public class Sys {
 
-    private int all;
+    private int type;
+    private int id;
+    private float message;
+    private String country;
+    private int sunrise;
+    private int sunset;
 
 }

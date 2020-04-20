@@ -7,10 +7,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Weather {
 
-    private Integer id;
+    private int id;
     private String main;
     private String description;
     private String icon;
