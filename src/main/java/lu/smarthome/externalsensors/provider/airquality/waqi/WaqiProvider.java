@@ -1,6 +1,6 @@
 package lu.smarthome.externalsensors.provider.airquality.waqi;
 
-import lu.smarthome.externalsensors.config.WaqiAirQualityProperties;
+import lu.smarthome.externalsensors.config.properties.WaqiAirQualityProperties;
 import lu.smarthome.externalsensors.exception.ExternalSensorException;
 import lu.smarthome.externalsensors.provider.airquality.AirQualityProvider;
 import org.springframework.beans.factory.annotation.Qualifier;

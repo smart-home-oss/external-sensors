@@ -1,6 +1,6 @@
 package lu.smarthome.externalsensors.provider.weather.accu;
 
-import lu.smarthome.externalsensors.config.AccuWeatherProperties;
+import lu.smarthome.externalsensors.config.properties.AccuWeatherProperties;
 import lu.smarthome.externalsensors.exception.ExternalSensorException;
 import lu.smarthome.externalsensors.provider.weather.WeatherProvider;
 import org.springframework.beans.factory.annotation.Qualifier;

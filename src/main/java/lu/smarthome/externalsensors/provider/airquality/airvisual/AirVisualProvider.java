@@ -1,6 +1,6 @@
 package lu.smarthome.externalsensors.provider.airquality.airvisual;
 
-import lu.smarthome.externalsensors.config.AirVisualAirQualityProperties;
+import lu.smarthome.externalsensors.config.properties.AirVisualAirQualityProperties;
 import lu.smarthome.externalsensors.exception.ExternalSensorException;
 import lu.smarthome.externalsensors.provider.airquality.AirQualityProvider;
 import lu.smarthome.externalsensors.provider.airquality.AirQualityResponse;

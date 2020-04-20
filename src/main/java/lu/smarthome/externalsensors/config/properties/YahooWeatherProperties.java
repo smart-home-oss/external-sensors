@@ -1,4 +1,4 @@
-package lu.smarthome.externalsensors.config;
+package lu.smarthome.externalsensors.config.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

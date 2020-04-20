@@ -1,11 +1,11 @@
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
-    <appender name="ELASTIC" class="lu.smarthome.externalsensors.elasticsearch.ElasticsearchLoggingAppender">
-    </appender>
+<!--    <appender name="ELASTIC" class="lu.smarthome.externalsensors.elasticsearch.ElasticsearchLoggingAppender">-->
+<!--    </appender>-->
 
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="ELASTIC"/>
+<!--        <appender-ref ref="ELASTIC"/>-->
     </root>
 </configuration>

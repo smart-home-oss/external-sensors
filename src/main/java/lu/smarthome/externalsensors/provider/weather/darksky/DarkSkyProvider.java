@@ -1,6 +1,6 @@
 package lu.smarthome.externalsensors.provider.weather.darksky;
 
-import lu.smarthome.externalsensors.config.DarkSkyWeatherProperties;
+import lu.smarthome.externalsensors.config.properties.DarkSkyWeatherProperties;
 import lu.smarthome.externalsensors.exception.ExternalSensorException;
 import lu.smarthome.externalsensors.provider.weather.WeatherProvider;
 import lu.smarthome.externalsensors.provider.weather.WeatherResponse;
