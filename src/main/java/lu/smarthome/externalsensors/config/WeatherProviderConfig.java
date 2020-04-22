@@ -40,12 +40,4 @@ public class WeatherProviderConfig {
         return restTemplate;
     }
 
-    @Bean
-    @Qualifier("openweather")
-    public RestTemplate restTemplateOpenweather(){
-        RestTemplate restTemplate = new RestTemplate();
-
-        return restTemplate;
-    }
-
 }

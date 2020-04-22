@@ -21,11 +21,11 @@ public class OpenWeatherProperties {
 
     private String lang;
 
-    public String getParameters(){
+    public String getCityAndCountry(){
         return city.concat(",").concat(country);
     }
 
-    public String getParametersForUS(){
+    public String getCityStateAndCountry(){
         return city
                 .concat(",")
                 .concat(state)

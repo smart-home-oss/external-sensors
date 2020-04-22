@@ -19,7 +19,7 @@ public class OpenWeatherProvider implements WeatherProvider {
 
     private final RestTemplate restTemplate;
 
-    public OpenWeatherProvider(OpenWeatherProperties properties, @Qualifier("openweather") RestTemplate restTemplate) {
+    public OpenWeatherProvider(OpenWeatherProperties properties, @Qualifier("generic") RestTemplate restTemplate) {
         this.properties = properties;
         this.restTemplate = restTemplate;
     }
@@ -36,7 +36,7 @@ public class OpenWeatherProvider implements WeatherProvider {
 
         String url = UriComponentsBuilder
                 .fromHttpUrl(properties.getUrl())
-                .queryParam("q", properties.getParametersForUS())
+                .queryParam("q", properties.getCityStateAndCountry())
                 .queryParam("units", UnitsFormat.METRIC)
                 .queryParam("mode", FormatMode.JSON)
                 .queryParam("lang", properties.getLang())
