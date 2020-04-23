@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -64,6 +63,11 @@ public class YahooProvider implements WeatherProvider {
         }
 
         throw new ExternalSensorException(response.getStatusCode());
+    }
+
+    @Override
+    public boolean isHealthy() {
+        return true;
     }
 
     String getUrl() {
@@ -130,10 +134,6 @@ public class YahooProvider implements WeatherProvider {
         return headers;
     }
 
-    @Override
-    public boolean supports() {
-        return true;
-    }
 }
 
 

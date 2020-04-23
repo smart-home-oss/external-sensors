@@ -6,5 +6,5 @@ public interface WeatherProvider {
 
     WeatherResponse retrieve();
 
-    boolean supports();
+    boolean isHealthy();
 }

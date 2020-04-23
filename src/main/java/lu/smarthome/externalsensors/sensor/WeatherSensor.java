@@ -21,11 +21,11 @@ public class WeatherSensor implements ExternalSensor {
 
         WeatherProvider weatherProvider = weatherProviderSelector.getProvider();
 
-        if (weatherProvider.supports()) {
+        if (weatherProvider.isHealthy()) {
             WeatherResponse response = weatherProvider.retrieve();
             log.info(ProviderType.WEATHER + ": " + response.getTemp());
         } else {
-            log.warn("The requested provider is not supported, provider name: " + weatherProvider.getName());
+            log.warn("The requested provider is not healthy, provider name: " + weatherProvider.getName());
         }
     }
 }

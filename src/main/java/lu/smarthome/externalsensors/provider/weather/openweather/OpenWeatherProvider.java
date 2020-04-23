@@ -1,57 +1,56 @@
-package lu.smarthome.externalsensors.provider.weather.weatherbit;
+package lu.smarthome.externalsensors.provider.weather.openweather;
 
-import lu.smarthome.externalsensors.config.properties.WeatherbitWeatherProperties;
+import lu.smarthome.externalsensors.config.OpenWeatherProperties;
 import lu.smarthome.externalsensors.exception.ExternalSensorException;
+import lu.smarthome.externalsensors.provider.FormatMode;
+import lu.smarthome.externalsensors.provider.UnitsFormat;
 import lu.smarthome.externalsensors.provider.weather.WeatherProvider;
 import lu.smarthome.externalsensors.provider.weather.WeatherResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-@Qualifier("weather")
-@Component("weatherbit-weather")
-public class WeatherbitProvider implements WeatherProvider {
+@Component
+public class OpenWeatherProvider implements WeatherProvider {
 
-    private final WeatherbitWeatherProperties properties;
+    private final OpenWeatherProperties properties;
 
     private final RestTemplate restTemplate;
 
-    public WeatherbitProvider(WeatherbitWeatherProperties properties, @Qualifier("generic") RestTemplate restTemplate) {
+    public OpenWeatherProvider(OpenWeatherProperties properties, @Qualifier("generic") RestTemplate restTemplate) {
         this.properties = properties;
         this.restTemplate = restTemplate;
     }
 
+
     @Override
     public String getName() {
-        return "weatherbit";
+        return "openweather";
     }
 
     @Override
     public WeatherResponse retrieve() {
 
-        UriComponentsBuilder getParams = UriComponentsBuilder
+
+        String url = UriComponentsBuilder
                 .fromHttpUrl(properties.getUrl())
-                .queryParam("key", properties.getApiKey())
+                .queryParam("q", properties.getCityStateAndCountry())
+                .queryParam("units", UnitsFormat.METRIC)
+                .queryParam("mode", FormatMode.JSON)
                 .queryParam("lang", properties.getLang())
-                .queryParam("city", properties.getCity())
-                .queryParam("country", properties.getCountry());
+                .queryParam("appid", properties.getApiKey())
+                .encode()
+                .toUriString();
 
-        ResponseEntity<WeaterbitResponse> response;
-
-        try {
-            response = restTemplate
-                    .getForEntity(
-                            getParams.toUriString(),
-                            WeaterbitResponse.class
-                    );
-        } catch (HttpServerErrorException e) {
-            throw new ExternalSensorException(e.getStatusCode());
-        }
-
+        ResponseEntity<OpenWeatherResponse> response = restTemplate
+                .getForEntity(
+                        url,
+                        OpenWeatherResponse.class
+                );
         if (response.getStatusCode().is2xxSuccessful()) {
+
             return response.getBody();
         }
 
@@ -60,10 +59,10 @@ public class WeatherbitProvider implements WeatherProvider {
 
     @Override
     public boolean isHealthy() {
+
         if (properties.getApiKey() == null) {
             return false;
         }
-
         return true;
     }
 }
