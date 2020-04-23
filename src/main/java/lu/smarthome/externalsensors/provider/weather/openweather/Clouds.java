@@ -10,6 +10,10 @@ import lombok.Setter;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Clouds {
 
+    /**
+     * Cloudiness, %
+     * @see <a href="https://openweathermap.org/current">Official documentation</a>
+     */
     private int all;
 
 }
